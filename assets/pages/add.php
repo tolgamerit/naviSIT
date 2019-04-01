@@ -1,0 +1,143 @@
+<?php if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
+  if (isset($_POST['submit'])) 
+  {
+
+    if (isset($_POST['navimarka'])) 
+    {
+      $navimarka = $_POST['navimarka'];
+
+      $kaynak    = $_FILES["resim"]["tmp_name"];
+      $dosyaadi   = $_FILES["resim"]["name"];
+      $dosyatipi = $_FILES["resim"]["type"];
+      $dboyut    = $_FILES["resim"]["size"];
+      //hedef uzantısı sunucuya göre farklıık gösteriyor
+      $hedef     = "C:/xampp/htdocs/naviSIT/upload/pictures/";
+
+      $uzanti        = substr($dosyaadi, -4);
+
+      $yeniad        = substr(md5(uniqid(rand())), 0, 10);
+
+      $yeniresimadi  = $yeniad . $uzanti;
+
+
+      $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi);
+      $yeniuzanti = "/naviSIT/upload/pictures/" . $yeniresimadi;
+
+      $kayit = $db->prepare("insert into tbl_brands SET title=?,picture=?");
+      $kayit->execute(array($navimarka, $yeniuzanti));
+    }
+
+    if (isset($_POST['aracmarka'])) 
+    {
+      $aracmarka = $_POST['aracmarka'];
+      $kaynak    = $_FILES["resim1"]["tmp_name"];
+      $dosyaadi   = $_FILES["resim1"]["name"];
+      $dosyatipi = $_FILES["resim1"]["type"];
+      $dboyut    = $_FILES["resim1"]["size"];
+      //hedef uzantısı sunucuya göre farklıık gösteriyor
+      $hedef     = "C:/xampp/htdocs/naviSIT/upload/pictures/";
+
+      $uzanti        = substr($dosyaadi, -4);
+
+      $yeniad        = substr(md5(uniqid(rand())), 0, 10);
+
+      $yeniresimadi  = $yeniad . $uzanti;
+
+
+      $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi);
+      $yeniuzanti = "/naviSIT/upload/pictures/" . $yeniresimadi;
+
+      $kayit = $db->prepare("insert into tbl_cars SET title=?,picture=?");
+      $kayit->execute(array($aracmarka, $yeniuzanti));
+    }
+
+    if (isset($_POST['urunad'])) 
+    {
+      $a = 0;
+      do 
+      {
+        $kaynak    = $_FILES["upload"]["tmp_name"][$a];
+        $dosyaadi   = $_FILES["upload"]["name"][$a];
+        $dosyatipi = $_FILES["upload"]["type"][$a];
+        $dboyut    = $_FILES["upload"]["size"][$a];
+        //hedef uzantısı sunucuya göre farklıık gösteriyor
+        $hedef     = "C:/xampp/htdocs/naviSIT/upload/pictures/";
+
+        $uzanti        = substr($dosyaadi, -4);
+
+        $yeniad        = substr(md5(uniqid(rand())), 0, 10);
+
+        $yeniresimadi[$a]  = $yeniad . $uzanti;
+
+
+        $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi[$a]);
+        $yeniuzanti[$a] = "/naviSIT/upload/pictures/" . $yeniresimadi[$a];
+        $a++;
+      } while (!empty($yeniresimadi[$a]));
+
+      $urunad = $_POST['urunad'];
+      $cihazmarka = $_POST['cihazmarka'];
+      $uyumluaraba = $_POST['uyumluaraba'];
+      $stokadet = $_POST['stokadet'];
+      $satisdurum = $_POST['satisdurum'];
+      $ekranboyut = $_POST['ekranboyut'];
+      $sistem = $_POST['sistem'];
+      $depolama = $_POST['depolama'];
+      $islemci = $_POST['islemci'];
+      $ram = $_POST['ram'];
+      $detay = $_POST['detay'];
+  
+       error_reporting(0);
+  
+      $kayit = $db->prepare("insert into tbl_product SET product_name=?,product_brand=?,product_compatible_car=?,product_stock=?,product_enabled=?");
+      $kayit->execute(array($urunad, $cihazmarka, $uyumluaraba, $stokadet, $satisdurum));
+          $kayit1 = $db->prepare("insert into product_features SET product_screen=?,product_os=?,product_storage=?,product_cpu=?,product_ram=?,product_detail=?,product_picture1=?,product_picture2=?,product_picture3=?");
+      
+       
+      $kayit1->execute(array($ekranboyut, $sistem, $depolama, $islemci, $ram, $detay, $yeniuzanti[0], $yeniuzanti[1], $yeniuzanti[2]));
+
+
+    }
+
+    
+  
+
+if (isset($kayit)) {
+
+  echo "
+              <div class='container'>
+              <div class='row'> 
+              <div class='col-md-12'>   <div style='box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)' class='p-5 mt-5 mb-5 alert alert-success text-center rounded' role='alert'>
+             Ekleme Başarılı!
+            </div></div>
+               </div>
+               </div>
+               <meta http-equiv='refresh' content='1;URL=home.php'>
+              
+              ";
+} else {
+  echo "
+              
+                 <div class='container'>
+                 <div class='row'> 
+                 <div class='col-md-12'>   <div style='box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)' class='p-5 mt-5 mb-5alert alert-danger text-center rounded' role='alert'>
+                 Eklemede Hata Oluştu!
+               </div></div>
+                  </div>
+                  </div>   
+                  <meta http-equiv='refresh' content='1;URL=home.php'>        
+                 ";
+  // 
+            }
+//echo "<img src=/naviSIT/upload/pictures/$yeniresimadi>";
+
+
+
+          }
+        }
+        else 
+        {
+       echo"   <meta http-equiv='refresh' content='1;URL=index.php'>        
+       ";
+        }
+ ?>
