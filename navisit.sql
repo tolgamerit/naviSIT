@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 01, 2019 at 10:45 PM
--- Server version: 5.5.59-cll
+-- Host: localhost
+-- Generation Time: May 10, 2019 at 06:31 PM
+-- Server version: 5.7.17-log
 -- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,52 +17,67 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `adananav_navisit`
+-- Database: `navisit`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_features`
+-- Table structure for table `tbl_araba`
 --
 
-CREATE TABLE `product_features` (
-  `product_id` int(11) NOT NULL,
-  `product_screen` varchar(50) NOT NULL,
-  `product_os` varchar(50) NOT NULL,
-  `product_storage` varchar(50) NOT NULL,
-  `product_cpu` varchar(50) NOT NULL,
-  `product_ram` varchar(50) NOT NULL,
-  `product_detail` text NOT NULL,
-  `product_picture1` varchar(100) NOT NULL,
-  `product_picture2` varchar(100) NOT NULL,
-  `product_picture3` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `product_features`
---
-
-INSERT INTO `product_features` (`product_id`, `product_screen`, `product_os`, `product_storage`, `product_cpu`, `product_ram`, `product_detail`, `product_picture1`, `product_picture2`, `product_picture3`) VALUES
-(1, '7\"', 'Android', '16 GB', 'Quad Core', '1 GB', 'Araç Uyumlulu?u\r\n:	Astra-Corsa-Vectra-Combo\r\n??letim Sistemi\r\n:	Android 7.1.2 Nougat\r\n??lemci\r\n:	Cortex A9 4 Çekirdek\r\nRAM\r\n:	1 Gb\r\nHaf?za\r\n:	16 Gb\r\nEkran\r\n:	7 Inch HD Dokunmatik Panel\r\nÇözünürlük\r\n:	1024x600\r\nAç?l?? Logosu\r\n:	Orjinal marka logosu ile aç?lma\r\nDireksiyon Kumanda Deste?i\r\n:	Var\r\nDVD\r\n:	Var\r\nBluetooth\r\n:	Var\r\nDahili Mikrofon\r\n:	Var\r\nTelefon Rehberi Aktarma\r\n:	Var\r\nUSB\r\n:	Var\r\nSD Kart\r\n:	Var\r\nRadyo\r\n:	18 Kanal Haf?zas? Am/FM\r\nSes Ç?k???\r\n:	4x45 watt surround stero\r\nEQ\r\n:	10 band grafik\r\nGeri Görü? Kameras?\r\n:	Var\r\nGPS\r\n:	Var\r\nVideo Format\r\n:	1080p / AVI, MKV, MP4, WMV, RMVB, MPG\r\nSes Format\r\n:	MP3, WMA, WAV, AC3, OGG, FLAC\r\nResim Biçimleri\r\n:	JPEG, BMP, PNG, TIFF\r\nWi-fi\r\n:	Var\r\nAmfi Ç?k???\r\n:	4 Kanal\r\nGaranti\r\n:	2 Y?l', 'upload/pictures/fc920304a5.jpg', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_brands`
---
-
-CREATE TABLE `tbl_brands` (
+CREATE TABLE `tbl_araba` (
   `id` int(11) NOT NULL,
-  `title` varchar(150) NOT NULL,
-  `picture` varchar(150) NOT NULL
+  `baslik` varchar(150) NOT NULL,
+  `araba` varchar(150) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_brands`
+-- Dumping data for table `tbl_araba`
 --
 
-INSERT INTO `tbl_brands` (`id`, `title`, `picture`) VALUES
+INSERT INTO `tbl_araba` (`id`, `baslik`, `araba`) VALUES
+(1, 'Opel', 'upload/pictures/4e62d376a3.png'),
+(2, 'BMW', 'upload/pictures/0fccc60f40.png'),
+(3, 'Mercedes', 'upload/pictures/3236c4ae6c.png'),
+(4, 'volkswagen', 'upload/pictures/c6723c2b42.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_kullanici`
+--
+
+CREATE TABLE `tbl_kullanici` (
+  `id` int(11) NOT NULL,
+  `kullanici` varchar(34) NOT NULL,
+  `parola` varchar(34) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_kullanici`
+--
+
+INSERT INTO `tbl_kullanici` (`id`, `kullanici`, `parola`) VALUES
+(1, '9db3f02f0826b7027a9691b4b88fed0e', '9db3f02f0826b7027a9691b4b88fed0e');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_marka`
+--
+
+CREATE TABLE `tbl_marka` (
+  `id` int(11) NOT NULL,
+  `baslik` varchar(150) NOT NULL,
+  `resim` varchar(150) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_marka`
+--
+
+INSERT INTO `tbl_marka` (`id`, `baslik`, `resim`) VALUES
 (1, 'Cyclone', 'upload/pictures/740dfa5434.png'),
 (2, 'Necvox', 'upload/pictures/1215d34941.png'),
 (3, 'Naviin', 'upload/pictures/169a68f061.png'),
@@ -74,138 +87,120 @@ INSERT INTO `tbl_brands` (`id`, `title`, `picture`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_cars`
+-- Table structure for table `tbl_urun`
 --
 
-CREATE TABLE `tbl_cars` (
+CREATE TABLE `tbl_urun` (
   `id` int(11) NOT NULL,
-  `title` varchar(150) NOT NULL,
-  `picture` varchar(150) NOT NULL
+  `urun_adi` varchar(150) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `urun_marka` varchar(150) NOT NULL,
+  `urun_uyumlu_araba` varchar(100) NOT NULL,
+  `urun_stok` int(11) NOT NULL,
+  `urun_durum` tinyint(4) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_cars`
+-- Dumping data for table `tbl_urun`
 --
 
-INSERT INTO `tbl_cars` (`id`, `title`, `picture`) VALUES
-(1, 'Opel', 'upload/pictures/4e62d376a3.png'),
-(2, 'BMW', 'upload/pictures/0fccc60f40.png'),
-(3, 'Mercedes', 'upload/pictures/3236c4ae6c.png'),
-(4, 'volkswagen', 'upload/pictures/c6723c2b42.png');
+INSERT INTO `tbl_urun` (`id`, `urun_adi`, `urun_marka`, `urun_uyumlu_araba`, `urun_stok`, `urun_durum`) VALUES
+(1, 'deneme', 'Convex', 'Opel', 1, 1),
+(2, 'VOLKSWAGEN 8`` NVN 503', 'Cyclone', 'volkswagen', 54, 0),
+(3, 'BMW E 90 NVN 518', 'Cyclone', 'Mercedes', 70, 1),
+(4, 'Mercedes B Class – 9 İnç DVD ve Multimedya Sistemi', 'Cyclone', 'Mercedes', 10, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_product`
+-- Table structure for table `urun_ozellikler`
 --
 
-CREATE TABLE `tbl_product` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(150) NOT NULL,
-  `product_brand` varchar(150) NOT NULL,
-  `product_compatible_car` varchar(100) NOT NULL,
-  `product_stock` int(11) NOT NULL,
-  `product_enabled` tinyint(4) NOT NULL
+CREATE TABLE `urun_ozellikler` (
+  `urun_id` int(11) NOT NULL,
+  `urun_ekran` varchar(50) NOT NULL,
+  `urun_sistem` varchar(50) NOT NULL,
+  `urun_depolama` varchar(50) NOT NULL,
+  `urun_cpu` varchar(50) NOT NULL,
+  `urun_ram` varchar(50) NOT NULL,
+  `urun_detay` text CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `urun_resim1` varchar(100) DEFAULT NULL,
+  `urun_resim2` varchar(100) DEFAULT NULL,
+  `urun_resim3` varchar(100) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_product`
+-- Dumping data for table `urun_ozellikler`
 --
 
-INSERT INTO `tbl_product` (`id`, `product_name`, `product_brand`, `product_compatible_car`, `product_stock`, `product_enabled`) VALUES
-(1, 'Multimedya Navigasyon Sistemi Vectra*Astra*Corsa*Combo', 'Convex', 'Opel', 150, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_login`
---
-
-CREATE TABLE `user_login` (
-  `id` int(11) NOT NULL,
-  `username` varchar(34) NOT NULL,
-  `pass` varchar(34) NOT NULL,
-  `permission` int(2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user_login`
---
-
-INSERT INTO `user_login` (`id`, `username`, `pass`, `permission`) VALUES
-(1, '9db3f02f0826b7027a9691b4b88fed0e', '9db3f02f0826b7027a9691b4b88fed0e', 1),
-(2, '', '', 0),
-(3, '9db3f02f0826b7027a9691b4b88fed0e', '9db3f02f0826b7027a9691b4b88fed0e', 1);
+INSERT INTO `urun_ozellikler` (`urun_id`, `urun_ekran`, `urun_sistem`, `urun_depolama`, `urun_cpu`, `urun_ram`, `urun_detay`, `urun_resim1`, `urun_resim2`, `urun_resim3`) VALUES
+(1, '5\"', 'Windows CE', '4 GB', 'Dual Core', '512 MB', '1', '/upload/pictures/fc920304a5.jpg', '', ''),
+(2, '8\"', 'Windows CE', '4 GB', 'Dual Core', '1 GB', '* Dijital 800xRGBx480 TFT monitör\r\n\r\n* Dokunmatik ekran\r\n\r\n* MP3 / MP4 / WMA / DVD / DVD-R / VCD / CD / CD-R\r\n\r\n* CD-RW / DivX vb. uyumlu\r\n\r\n* Grafikli kullanıcı arayüzü\r\n\r\n* 8 çeşit seçilebilir duvar kağıdı\r\n\r\n* SD kart ve USB\r\n\r\n* Oyun\r\n\r\n* Hesap makinası fonksiyonu\r\n\r\n* Direksiyon kumandası\r\n\r\n* Floresan ışıklı tam fonksiyonlu\r\n\r\n* OSD uzaktan kumanda\r\n\r\n* 30 istasyon hafızalı FM / AM stereo alıcı\r\n\r\n* 4x45 watt amfi\r\n\r\n* Gerçek zamanlı saat fonksiyonu\r\n\r\n* 2 video çıkışı, 4 ses çıkışı, 2 video girişi, 2 ses girişi\r\n\r\n* Elektronik ve mekanik antişok system\r\n\r\n* Otomatik arka görüntüleme fonksiyonu\r\n\r\n* Manuel fren kapanış ekran fonksiyonu\r\n\r\n* Dahili GPS sistemi\r\n\r\n* Dahili Bluetooth, A2DP desteği\r\n\r\n * Harici IPOD oynatıcı desteği', '/upload/pictures/221c87c3c0.jpg', NULL, NULL),
+(3, '7\"', 'Windows CE', '8 GB', 'Dual Core', '1 GB', '* 800*480 TFT Monitör\r\n\r\n* Android 4.4 Sistem \r\n\r\n* DVR Kamera Kayıt Desteği\r\n\r\n* Dahili Gps Sistemi \r\n\r\n* Dahili Bluetooth , A2DP desteği\r\n\r\n* DVD/VCD/CD/CD-RW/CD-R/MEPG4/JPG\r\n\r\n* USB/ SD Kart Desteği \r\n\r\n* 30 İstasyon Hafızalı  Fm Am Stereo Alıcı\r\n\r\n* Direksiyon kontrolü\r\n\r\n* 4*48 Watt Amfi\r\n\r\n* Geri Görüş Kamerası Desteği\r\n\r\n* Çoklu Dil Seçeneği\r\n\r\n* Wi-Fi ( Modeme ya da Kablosuz İnternet Paylaşım Desteği Olan Telefonlara Bağlanabilme Özelliği ) 3G * Modem ile İnternet Bağlantı Özelliği\r\n\r\n* Iphone İçin Air Play Desteği \r\n\r\n* Telefon Ekran Görüntüsü Paylaşabilme Özelliği', '/upload/pictures/6520f0431e.jpg', NULL, NULL),
+(4, '10\"', 'Android', '8 GB', 'Dual Core', '2 GB', 'Mercedes B Class – 9 İnç DVD ve Multimedya Sistemi\r\n', '/upload/pictures/2181096499.jpg', '/upload/pictures/94eba7d399.jpg', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `product_features`
+-- Indexes for table `tbl_araba`
 --
-ALTER TABLE `product_features`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Indexes for table `tbl_brands`
---
-ALTER TABLE `tbl_brands`
+ALTER TABLE `tbl_araba`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_cars`
+-- Indexes for table `tbl_kullanici`
 --
-ALTER TABLE `tbl_cars`
+ALTER TABLE `tbl_kullanici`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_product`
+-- Indexes for table `tbl_marka`
 --
-ALTER TABLE `tbl_product`
+ALTER TABLE `tbl_marka`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_login`
+-- Indexes for table `tbl_urun`
 --
-ALTER TABLE `user_login`
+ALTER TABLE `tbl_urun`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `urun_ozellikler`
+--
+ALTER TABLE `urun_ozellikler`
+  ADD PRIMARY KEY (`urun_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `product_features`
+-- AUTO_INCREMENT for table `tbl_araba`
 --
-ALTER TABLE `product_features`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+ALTER TABLE `tbl_araba`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `tbl_brands`
+-- AUTO_INCREMENT for table `tbl_kullanici`
 --
-ALTER TABLE `tbl_brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `tbl_cars`
---
-ALTER TABLE `tbl_cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `tbl_product`
---
-ALTER TABLE `tbl_product`
+ALTER TABLE `tbl_kullanici`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
--- AUTO_INCREMENT for table `user_login`
+-- AUTO_INCREMENT for table `tbl_marka`
 --
-ALTER TABLE `user_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-COMMIT;
-
+ALTER TABLE `tbl_marka`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `tbl_urun`
+--
+ALTER TABLE `tbl_urun`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `urun_ozellikler`
+--
+ALTER TABLE `urun_ozellikler`
+  MODIFY `urun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
