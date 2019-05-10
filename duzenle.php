@@ -92,8 +92,13 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
         $detay = $_POST['detail'];
         $urunad=$_POST['urunadi'];
         try {
+
             $degis = $db->prepare("update tbl_urun set urun_adi=:urunad,urun_marka=:brand,urun_uyumlu_araba=:car,urun_stok=:stock  WHERE id = :id");
             $degis->execute(array('id' => $id,'urunad' =>$urunad, 'brand' => $cihazmarka, 'car' => $uyumluaraba, 'stock' => $stokadet));
+           
+            $degis1 = $db->prepare("update urun_ozellikler set  urun_ekran=:ekran,urun_sistem=:sistem,urun_depolama=:depolama,urun_cpu=:cpu,urun_ram=:ram,urun_detay=:detay  WHERE urun_id = :id");
+            $degis1->execute(array('id' => $id,'ekran' =>$ekranboyut, 'sistem' => $sistem, 'depolama' => $depolama, 'cpu' => $islemci, 'ram' => $ram, 'detay' => $detay));
+
             echo "=
   <div class='container'>
   <div class='row'> 
@@ -268,7 +273,7 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
                                             <p>
 
                                                 <input class="btn btn-success rounded" type="submit" value="KAYDET">
-                                                <a href="home.php" class=" ml-3 btn btn-info rounded float-right">Geri</a>
+                                                <a href="anasayfa.php" class=" ml-3 btn btn-info rounded float-right">Geri</a>
                                                 </form>
                                     </div>
                         </div>
