@@ -66,7 +66,7 @@ include("assets/pages/urun_ekle.php"); //cihaz ekleme sayfası
     ?>
     <!-- İçe Aktarmalar-->
     <!-- Detaylar Başlangıç-->
-    <div class="container p-5">
+    <div class="container-fluid p-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-nav-tabs">

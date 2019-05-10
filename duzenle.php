@@ -114,7 +114,7 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
         }
     }
     ?>
-    <div class="container pl-5 pr-5 mt-2">
+    <div class="container-fluid pl-5 pr-5 mt-2">
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-nav-tabs">

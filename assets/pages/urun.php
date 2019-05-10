@@ -1,16 +1,16 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card card-nav-tabs rounded" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)">
                 <h4 style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="card-header h3 card-header-info text-white rounded">Ürünler</h4>
                 <div class="card-body mt-3">
-                    <div class="row">
+                    <div class="row ">
                         <form action="anasayfa.php" class="form" role="form" autocomplete="off" id="formAra" method="POST">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row mb-3">
+                                <div class="col-md-10 ">
                                     <input type="text" class="form-control" placeholder="Aranacak Ürün" name="ara" required>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     <button type="submit" class="btn btn-info btn-sm rounded float-left" id="btnAra" name="Ara"><i class="fas fa-search"></i>Ara</button>
                                 </div>
                             </div>
