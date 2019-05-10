@@ -75,19 +75,19 @@ include("assets/pages/urun_ekle.php"); //cihaz ekleme sayfası
                         <?php
                         if ($_GET['detaylar']) {
                             $detay_al = $_GET['detaylar'];
-                            $sorgu = $db->prepare('select * from tbl_product inner join product_features on tbl_product.id=product_features.product_id where tbl_product.id=' . $detay_al . '');
+                            $sorgu = $db->prepare('select * from tbl_urun inner join urun_ozellikler on tbl_urun.id=urun_ozellikler.urun_id where tbl_urun.id=' . $detay_al . '');
 
                             $sorgu->execute(array($detay_al));
                             $d = $sorgu->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($d as $veri) {
                                 ?>
-                                <h4 class="card-title"><?php echo $veri['product_name'] ?></h4>
+                                <h4 class="card-title"><?php echo $veri['urun_adi'] ?></h4>
                                 <div class="row">
                                     <div class="col-md-6"><i class="lead">Üretici Firma </i>
-                                        <p class="border-bottom border-info mt-2"><?php echo $veri['product_brand'] ?><p>
+                                        <p class="border-bottom border-info mt-2"><?php echo $veri['urun_marka'] ?><p>
                                     </div>
                                     <div class="col-md-6"><i class="lead">Cihaz ile Uyumlu Araba Markası </i>
-                                        <p class="border-bottom border-info mt-2"><?php echo $veri['product_compatible_car'] ?><p>
+                                        <p class="border-bottom border-info mt-2"><?php echo $veri['urun_uyumlu_araba'] ?><p>
                                     </div>
                                 </div>
                                 <div class="row text-center mt-3">
@@ -115,11 +115,11 @@ include("assets/pages/urun_ekle.php"); //cihaz ekleme sayfası
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    echo ' <td>' . $veri["product_screen"] . '</td>
-                                <td>' . $veri["product_os"] . '</td>
-                                <td>' . $veri["product_storage"] . '</td>
-                                <td>' . $veri["product_cpu"] . '</td>
-                                <td>' . $veri["product_ram"] . '</td>';
+                                                    echo ' <td>' . $veri["urun_ekran"] . '</td>
+                                <td>' . $veri["urun_sistem"] . '</td>
+                                <td>' . $veri["urun_depolama"] . '</td>
+                                <td>' . $veri["urun_cpu"] . '</td>
+                                <td>' . $veri["urun_ram"] . '</td>';
                                                     ?>
                                                 </tbody>
                                             </table>
@@ -135,25 +135,25 @@ include("assets/pages/urun_ekle.php"); //cihaz ekleme sayfası
                             <div class="row m-2">
 
                                 <div class="col-md-4">
-                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture1'] ?>" />
+                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim1'] ?>" />
 
                                 </div>
                                 <div class="col-md-4">
-                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture2'] ?>"> </div>
+                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim2'] ?>"> </div>
                                 <div class="col-md-4">
-                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture3'] ?>"> </div>
+                                    <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim3'] ?>"> </div>
                             </div>
                             <div class="row m-4">
                                 <div class="col-md-6">
                                     <i class="lead">Cihaz Detayları </i>
-                                    <textarea class="form-control border-bottom border-info mt-2" rows="10" disabled><?php echo $veri['product_detail'] ?></textarea>
+                                    <textarea class="form-control border-bottom border-info mt-2" rows="10" disabled><?php echo $veri['urun_detay'] ?></textarea>
                                 </div>
                                 <div class="col-md-6 text-center">
                                     <i class="lead">Stok Miktari</i>
-                                    <p class="border-bottom border-info mt-2"><?php echo $veri['product_stock'] . " Adet"; ?><p>
+                                    <p class="border-bottom border-info mt-2"><?php echo $veri['urun_stok'] . " Adet"; ?><p>
                                             <div class="mt-5">
                                                 <i class="lead">Satış Durumu</i>
-                                                <p class="border-bottom border-info mt-2"><?php $durum = $veri['product_enabled'];
+                                                <p class="border-bottom border-info mt-2"><?php $durum = $veri['urun_durum'];
                                                                                             if ($durum == 1) echo "Satışta";
                                                                                             else echo "Satışta Değiş"; ?><p>
                                                         <a href="anasayfa.php" class="btn btn-info rounded float-right">Geri</a>

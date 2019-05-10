@@ -20,7 +20,7 @@
                             <label class="text-dark" for="cihazmarka">Cihaz Markası</label>
                             <select class="custom-select" name="cihazmarka">
                          <?php 
-                         foreach ($db->query("select * from tbl_brands") as $gelen)
+                         foreach ($db->query("select * from tbl_marka") as $gelen)
                          {
                              echo '
                             <option value="'.$gelen[1].'">'.$gelen[1].'</option>';
@@ -32,7 +32,7 @@
                             <label class="text-dark" for="uyumluaraba">Cihaz Uyumlu Araba</label>
                             <select class="custom-select" name="uyumluaraba">
                          <?php 
-                         foreach ($db->query("select * from tbl_cars") as $gelen)
+                         foreach ($db->query("select * from tbl_araba") as $gelen)
                          {
                              echo '
                             <option value="'.$gelen[1].'">'.$gelen[1].'</option>'; 

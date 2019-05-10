@@ -5,7 +5,7 @@
                 <h4 style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="card-header h3 card-header-info text-white rounded">Ürünler</h4>
                 <div class="card-body mt-3">
                     <div class="row">
-                        <form action="anasayfa.php"class="form" role="form" autocomplete="off" id="formAra" method="POST">
+                        <form action="anasayfa.php" class="form" role="form" autocomplete="off" id="formAra" method="POST">
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" placeholder="Aranacak Ürün" name="ara" required>
@@ -19,8 +19,8 @@
                             <table class="table text-center table-hover" id="table">
                                 <thead>
                                     <tr>
-                                        <?php 
-                                        $ara = $db->query('SELECT * FROM tbl_product');
+                                        <?php
+                                        $ara = $db->query('SELECT * FROM tbl_urun');
                                         for ($i = 0; $i < $ara->columnCount(); $i++) {
                                             $col = $ara->getColumnMeta($i);
                                             $sutun[] = $col['name']; //Kolon isimlerini çekmek için
@@ -40,161 +40,160 @@
                                 </thead>
                                 <tbody>';
                                         $listelenen = 7;
-                                        $sayi = $db->query("select count(*) from tbl_product")->fetchColumn();
+                                        $sayi = $db->query("select count(*) from tbl_urun")->fetchColumn();
                                         $toplamsayfa     = ceil($sayi / $listelenen);
                                         $sayfa = isset($_GET['sayfa']) ? (int)$_GET['sayfa'] : 1;
                                         if ($sayfa < 1) $sayfa = 1;
                                         if ($sayfa > $toplamsayfa) $sayfa = $toplamsayfa;
                                         $limit = ($sayfa - 1) * $listelenen;
-$arama="";
+                                        $arama = "";
                                         if (isset($_POST['ara'])) {
-                                                $arama = $_POST['ara'];
-                                            }
+                                            $arama = $_POST['ara'];
+                                        }
 
-                                            if($sayi>0)
-                                            {
+                                        if ($sayi > 0) {
 
-                                        
-                                        foreach ($db->query("select * from tbl_product where product_name like '%$arama%' LIMIT $limit,$listelenen") as $gelen) {
-                                            if ($gelen[5] == 1) {
-                                                $satisdurumu = "Satışta";  # code...
-                                            } else $satisdurumu = "Satışta Değil";
-                                            echo '<tr>
+
+                                            foreach ($db->query("select * from tbl_urun where urun_adi like '%$arama%' LIMIT $limit,$listelenen") as $gelen) {
+                                                if ($gelen[5] == 1) {
+                                                    $satisdurumu = "Satışta";  # code...
+                                                } else $satisdurumu = "Satışta Değil";
+                                                echo '<tr>
                                     <td>' . $gelen[1] . '</td>
                                     <td>' . $gelen[2] . '</td>
                                     <td>' . $gelen[3] . '</td>
                                     <td>' . $gelen[4] . '</td>'; ?>
-                                        <td>
-                                            <div class="row">                                           
-                                                <div class="col-md-8"><?php echo $satisdurumu ?> </div>
-                                                <div class="col-md-4"> <a onclick=" Swal.fire({
-  title: 'Satış Durumunu Değiştirmek İstediğinize Emin Misiniz?',
-  text: 'İşlem Geri Alınamayacak!',
-  type: 'question',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  cancelButtonText: 'İptal',
-  confirmButtonText: 'Evet, Değiştir!'
-}).then((result) => {
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-8"><?php echo $satisdurumu ?> </div>
+                                                        <div class="col-md-4"> <a onclick=" Swal.fire({
+          title: 'Satış Durumunu Değiştirmek İstediğinize Emin Misiniz?',
+          text: 'İşlem Geri Alınamayacak!',
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'İptal',
+          confirmButtonText: 'Evet, Değiştir!'
+        }).then((result) => {
     
-  if (result.value) {
+          if (result.value) {
     
-    Swal.fire(
-        {
-           title: 'Değiştirildi!',
-    text:  'Cihaz Satış Durumu Başarıyla Değiştirildi.',
-      type: 'success',
-      confirmButtonColor: '#3085d6',
-  confirmButtonText: 'Kapat'
+            Swal.fire(
+                {
+                   title: 'Değiştirildi!',
+            text:  'Cihaz Satış Durumu Başarıyla Değiştirildi.',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Kapat'
    
-        }
+                }
         
       
-    ).then(function() {
-    window.location = 'anasayfa.php?durumdegis=<?php echo $gelen[0];  ?>&<?php echo 'anlik=' . $gelen[5]; ?>';
-});
+            ).then(function() {
+            window.location = 'anasayfa.php?durumdegis=<?php echo $gelen[0];  ?>&<?php echo 'anlik=' . $gelen[5]; ?>';
+        });
    
-  }
-})" title="Sil" class="btn btn-sm sweet-3 text-dark" data-toggle="confirmation"><i class="fas fa-exchange-alt"></i></a></div>
+          }
+        })" title="Satış Durumu Değiştir" class="btn btn-sm sweet-3 text-dark" data-toggle="confirmation"><i class="fas fa-exchange-alt"></i></a></div>
 
-                                            </div>
-                                            <div class="col-md-2"></div>
-
-
-                                        </td>
-                                        <td>
+                                                    </div>
+                                                    <div class="col-md-2"></div>
 
 
-                                            <a onclick=" Swal.fire({
-  title: 'Cihaz Detay Sayfası Açılsın Mı?',
+                                                </td>
+                                                <td>
+
+
+                                                    <a onclick=" Swal.fire({
+          title: 'Cihaz Detay Sayfası Açılsın Mı?',
   
-  type: 'question',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  cancelButtonText: 'Hayır',
-  confirmButtonText: 'Evet'
-}).then((result) => {
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Hayır',
+          confirmButtonText: 'Evet'
+        }).then((result) => {
     
-    if (result.value) {
-    window.location = 'detaylar.php?detaylar=<?php echo $gelen[0];  ?>';
+            if (result.value) {
+            window.location = 'detaylar.php?detaylar=<?php echo $gelen[0];  ?>';
 
-        }
-         });
-
-
-" title="Detaylar" class="text-dark btn btn-sm ml-2"> <i class="fas fa-info"></i></i></a>
+                }
+                 });
 
 
+        " title="Detaylar" class="text-dark btn btn-sm ml-2"> <i class="fas fa-info"></i></i></a>
 
-                                            <a onclick=" Swal.fire({
-  title: 'Emin Misiniz?',
-  text: 'İşlem Geri Alınamayacak!',
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  cancelButtonText: 'İptal',
-  confirmButtonText: 'Evet, Sil!'
-}).then((result) => {
+
+
+                                                    <a onclick=" Swal.fire({
+          title: 'Emin Misiniz?',
+          text: 'İşlem Geri Alınamayacak!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'İptal',
+          confirmButtonText: 'Evet, Sil!'
+        }).then((result) => {
     
-  if (result.value) {
+          if (result.value) {
     
-    Swal.fire(
-        {
-           title: 'Silindi!',
-    text:  'Cihaz Başarıyla Silindi.',
-      type: 'success',
-      confirmButtonColor: '#3085d6',
-  confirmButtonText: 'Kapat'
+            Swal.fire(
+                {
+                   title: 'Silindi!',
+            text:  'Cihaz Başarıyla Silindi.',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Kapat'
    
-        }
+                }
         
       
-    ).then(function() {
-    window.location = 'anasayfa.php?sil=<?php echo $gelen[0];  ?>';
-});
+            ).then(function() {
+            window.location = 'anasayfa.php?sil=<?php echo $gelen[0];  ?>';
+        });
    
-  }
-})" title="Sil" class="btn btn-sm sweet-3 text-dark" data-toggle="confirmation"><i class="fas fa-trash-alt"></i></a>
+          }
+        })" title="Sil" class="btn btn-sm sweet-3 text-dark" data-toggle="confirmation"><i class="fas fa-trash-alt"></i></a>
 
-                                            <a onclick=" Swal.fire({
-  title: 'Cihaz Düzenleme Sayfası Açılsın Mı?',
+                                                    <a onclick=" Swal.fire({
+          title: 'Cihaz Düzenleme Sayfası Açılsın Mı?',
   
-  type: 'question',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  cancelButtonText: 'Hayır',
-  confirmButtonText: 'Evet'
-}).then((result) => {
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Hayır',
+          confirmButtonText: 'Evet'
+        }).then((result) => {
     
-    if (result.value) {
-    window.location = 'duzenle.php?duzenle=<?php echo $gelen[0];  ?>';
+            if (result.value) {
+            window.location = 'duzenle.php?duzenle=<?php echo $gelen[0];  ?>';
 
-        }
-         });
-
-
-" title="Düzenle" class="text-dark btn btn-sm ml-2"> <i class="fas fa-edit"></i></i></a>
+                }
+                 });
 
 
+        " title="Düzenle" class="text-dark btn btn-sm ml-2"> <i class="fas fa-edit"></i></i></a>
 
 
-                                        </td>
-                                    </tr>
-                                    <?php
 
+
+                                                </td>
+                                            </tr>
+                                        <?php
+
+                                    }
                                 }
-                            }
                                 include("assets/pages/sil.php");
-                                include("assets/pages/degistir.php"); 
+                                include("assets/pages/degistir.php");
                                 ?>
                             </table>
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center">
-                                    <?php 
+                                    <?php
                                     for ($s = 1; $s <= $toplamsayfa; $s++) {
                                         if ($sayfa == $s) { // eğer bulunduğumuz sayfa ise link yapma.
                                             echo $s . ' ';
@@ -207,8 +206,8 @@ $arama="";
                             </nav>
                         </div>
                     </div>
-               </div>
+                </div>
             </div>
         </div>
     </div>
-</div> 
+</div>

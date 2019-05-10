@@ -90,10 +90,11 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
         $islemci = $_POST['islemci'];
         $ram = $_POST['ram'];
         $detay = $_POST['detail'];
+        $urunad=$_POST['urunadi'];
         try {
-            $degis = $db->prepare("update tbl_product set product_brand=:brand,product_compatible_car=:car,product_stock=:stock  WHERE id = :id");
-            $degis->execute(array('id' => $id, 'brand' => $cihazmarka, 'car' => $uyumluaraba, 'stock' => $stokadet));
-            echo "
+            $degis = $db->prepare("update tbl_urun set urun_adi=:urunad,urun_marka=:brand,urun_uyumlu_araba=:car,urun_stok=:stock  WHERE id = :id");
+            $degis->execute(array('id' => $id,'urunad' =>$urunad, 'brand' => $cihazmarka, 'car' => $uyumluaraba, 'stock' => $stokadet));
+            echo "=
   <div class='container'>
   <div class='row'> 
   <div class='col-md-12'>   <div style='box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)' class=' alert alert-success text-center rounded' role='alert'>
@@ -102,7 +103,7 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
    </div>
    </div>
   ";
-            echo "   <meta http-equiv='refresh' content='0;URL=anasayfa.php'>  ";
+            echo "   <meta http-equiv='refresh' content='0.85;URL=anasayfa.php'>  ";
         } catch (PDOException $e) {
             echo "   <meta http-equiv='refresh' content='0.85;URL=anasayfa.php'>  ";
         }
@@ -118,23 +119,49 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
                             <?php
                             if ($_GET['duzenle']) {
                                 $detay_al = $_GET['duzenle'];
-                                $sorgu = $db->prepare('select * from tbl_product inner join product_features on tbl_product.id=product_features.product_id where tbl_product.id=' . $detay_al . '');
+                                $sorgu = $db->prepare('select * from tbl_urun inner join urun_ozellikler on tbl_urun.id=urun_ozellikler.urun_id where tbl_urun.id=' . $detay_al . '');
                                 $sorgu->execute(array($detay_al));
                                 $d = $sorgu->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($d as $veri) {
                                     ?>
-                                    <h4 class="card-title"><?php echo $veri['product_name'] ?></h4>
+                                    
+                                    <h4 class="card-title">
+                                <input name="urunadi" type="text" class="form-control text-center" value="<?php echo $veri['urun_adi']; ?>" placeholder="   <?php echo $veri['urun_adi']; ?>">
+                                        
+                                   </h4>
                                     <div class="row">
-                                        <div class="col-md-6"><i class="lead">Üretici Firma </i>
-                                            <p class=" mt-2">
-                                                <input name="brand" type="text" class="form-control" value="<?php echo $veri['product_brand'] ?>" placeholder=" <?php echo $veri['product_brand'] ?>">
-                                                <p>
-                                        </div>
-                                        <div class="col-md-6"><i class="lead">Cihaz ile Uyumlu Araba Markası </i>
-                                            <p class="mt-2">
-                                                <input name="car" type="text" class="form-control" value="<?php echo $veri['product_compatible_car'] ?>" placeholder=" <?php echo $veri['product_compatible_car'] ?>">
-                                                <p>
-                                        </div>
+                                    <div class="form-group col-md-6">
+                            <label class="text-dark" for="brand">Cihaz Markası</label>
+                            <select class="custom-select" name="brand">
+                         <?php 
+                         foreach ($db->query("select * from tbl_marka") as $gelen)
+                         {
+                             if($gelen[1]==$veri['urun_marka'])
+                             {
+                                 echo '<option value="'.$gelen[1].'" selected>'.$gelen[1].'</option>';
+                             }
+                             echo '
+                            <option value="'.$gelen[1].'">'.$gelen[1].'</option>';
+                                                 }
+                         ?>
+                        </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="text-dark" for="car">Cihaz Uyumlu Araba</label>
+                            <select class="custom-select" name="car">
+                         <?php 
+                         foreach ($db->query("select * from tbl_araba") as $gelen)
+                         {
+                            if($gelen[1]==$veri['urun_uyumlu_araba'])
+                            {
+                                echo '<option value="'.$gelen[1].'" selected>'.$gelen[1].'</option>';
+                            }
+                             echo '
+                            <option value="'.$gelen[1].'">'.$gelen[1].'</option>'; 
+                                                }
+                         ?>
+                        </select>
+                        </div>
                                     </div>
                                     <div class="row text-center mt-3">
                                         <div class="col-md-12">
@@ -163,42 +190,42 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
                                                     <tbody>
                                                         <td>
                                                             <div class="form-group"> <select class="custom-select" name="ekranboyut">
-                                                                    <option value='5"' <?php if ($veri['product_screen'] == '5"') echo 'selected'; ?>>5"</option>
-                                                                    <option value='7"' <?php if ($veri['product_screen'] == '7"') echo 'selected'; ?>>7"</option>
-                                                                    <option value='8"' <?php if ($veri['product_screen'] == '8"') echo 'selected'; ?>>8"</option>
-                                                                    <option value='10"' <?php if ($veri['product_screen'] == '10"') echo 'selected'; ?>>10"</option>
+                                                                    <option value='5"' <?php if ($veri['urun_ekran'] == '5"') echo 'selected'; ?>>5"</option>
+                                                                    <option value='7"' <?php if ($veri['urun_ekran'] == '7"') echo 'selected'; ?>>7"</option>
+                                                                    <option value='8"' <?php if ($veri['urun_ekran'] == '8"') echo 'selected'; ?>>8"</option>
+                                                                    <option value='10"' <?php if ($veri['urun_ekran'] == '10"') echo 'selected'; ?>>10"</option>
                                                                 </select></div>
                                                         </td>
                                                         <td>
                                                             <div class="form-group"><select class="custom-select" name="sistem">
-                                                                    <option value="Windows CE" <?php if ($veri['product_os'] == 'Windows CE') echo 'selected'; ?>>Windows CE</option>
-                                                                    <option value="Android" <?php if ($veri['product_os'] == 'Android') echo 'selected'; ?>>Android</option>
+                                                                    <option value="Windows CE" <?php if ($veri['urun_sistem'] == 'Windows CE') echo 'selected'; ?>>Windows CE</option>
+                                                                    <option value="Android" <?php if ($veri['urun_sistem'] == 'Android') echo 'selected'; ?>>Android</option>
                                                                 </select></div>
                                                         </td>
                                                         <td>
                                                             <div class="form-group"> <select class="custom-select" name="depolama">
-                                                                    <option value="4 GB" <?php if ($veri['product_storage'] == '4 GB') echo 'selected'; ?>>4 GB</option>
-                                                                    <option value="8 GB" <?php if ($veri['product_storage'] == '8 GB') echo 'selected'; ?>>8 GB</option>
-                                                                    <option value="16 GB" <?php if ($veri['product_storage'] == '16 GB') echo 'selected'; ?>>16 GB</option>
-                                                                    <option value="32 GB" <?php if ($veri['product_storage'] == '32 GB') echo 'selected'; ?>>32 GB</option>
+                                                                    <option value="4 GB" <?php if ($veri['urun_depolama'] == '4 GB') echo 'selected'; ?>>4 GB</option>
+                                                                    <option value="8 GB" <?php if ($veri['urun_depolama'] == '8 GB') echo 'selected'; ?>>8 GB</option>
+                                                                    <option value="16 GB" <?php if ($veri['urun_depolama'] == '16 GB') echo 'selected'; ?>>16 GB</option>
+                                                                    <option value="32 GB" <?php if ($veri['urun_depolama'] == '32 GB') echo 'selected'; ?>>32 GB</option>
                                                                 </select></div>
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
                                                                 <select class="custom-select" name="islemci">
-                                                                    <option value="Dual Core" <?php if ($veri['product_cpu'] == 'Dual Core') echo 'selected'; ?>>Dual Core</option>
-                                                                    <option value="Quad Core" <?php if ($veri['product_cpu'] == 'Quad Core') echo 'selected'; ?>>Quad Core</option>
-                                                                    <option value="Octa Core" <?php if ($veri['product_cpu'] == 'Octa Core') echo 'selected'; ?>>Octa Core</option>
+                                                                    <option value="Dual Core" <?php if ($veri['urun_cpu'] == 'Dual Core') echo 'selected'; ?>>Dual Core</option>
+                                                                    <option value="Quad Core" <?php if ($veri['urun_cpu'] == 'Quad Core') echo 'selected'; ?>>Quad Core</option>
+                                                                    <option value="Octa Core" <?php if ($veri['urun_cpu'] == 'Octa Core') echo 'selected'; ?>>Octa Core</option>
                                                                 </select>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="form-group">
                                                                 <select class="custom-select" name="ram">
-                                                                    <option value="512 MB" <?php if ($veri['product_ram'] == '512 MB') echo 'selected'; ?>>512 MB</option>
-                                                                    <option value="1 GB" <?php if ($veri['product_ram'] == '1 GB') echo 'selected'; ?>>1 GB</option>
-                                                                    <option value="2 GB" <?php if ($veri['product_ram'] == '2 GB') echo 'selected'; ?>>2 GB</option>
-                                                                    <option value="4 GB" <?php if ($veri['product_ram'] == '4 GB') echo 'selected'; ?>>4 GB</option>
+                                                                    <option value="512 MB" <?php if ($veri['urun_ram'] == '512 MB') echo 'selected'; ?>>512 MB</option>
+                                                                    <option value="1 GB" <?php if ($veri['urun_ram'] == '1 GB') echo 'selected'; ?>>1 GB</option>
+                                                                    <option value="2 GB" <?php if ($veri['urun_ram'] == '2 GB') echo 'selected'; ?>>2 GB</option>
+                                                                    <option value="4 GB" <?php if ($veri['urun_ram'] == '4 GB') echo 'selected'; ?>>4 GB</option>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -215,27 +242,27 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
                     </div>
                     <div class="row m-2">
                         <div class="col-md-4">
-                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture1'] ?>" />
+                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim1'] ?>" />
                         </div>
                         <div class="col-md-4">
-                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture2'] ?>"> </div>
+                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim2'] ?>"> </div>
                         <div class="col-md-4">
-                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['product_picture3'] ?>"> </div>
+                            <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" class="img-fluid mx-auto d-block rounded mt-3 mb-3" src="<?php echo $veri['urun_resim3'] ?>"> </div>
                     </div>
                     <div class="row m-4">
                         <div class="col-md-6">
                             <i class="lead">Cihaz Detayları </i>
-                            <textarea name="detail" class=" form-control  mt-2" rows="10"><?php echo $veri['product_detail'] ?></textarea>
+                            <textarea name="detail" class=" form-control  mt-2" rows="10"><?php echo $veri['urun_detay'] ?></textarea>
                         </div>
                         <div class="col-md-6 text-center">
                             <i class="lead">Stok Miktari</i>
                             <p class="mt-2">
-                                <input name="stok" type="text" class="form-control text-center" value="<?php echo $veri['product_stock']; ?>" placeholder="   <?php echo $veri['product_stock'] . " Adet"; ?>">
+                                <input name="stok" type="text" class="form-control text-center" value="<?php echo $veri['urun_stok']; ?>" placeholder="   <?php echo $veri['urun_stok']; ?>">
                                 <p>
                                     <div class="mt-5">
                                         <i class="lead">Satış Durumu</i>
                                         <p class="border-bottom border-info mt-2">
-                                            <?php $durum = $veri['product_enabled'];
+                                            <?php $durum = $veri['urun_durum'];
                                             if ($durum == 1) echo "Satışta";
                                             else echo "Satışta Değiş"; ?>
                                             <p>

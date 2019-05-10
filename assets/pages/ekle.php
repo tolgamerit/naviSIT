@@ -15,7 +15,7 @@
       $yeniresimadi  = $yeniad . $uzanti;
       $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi);
       $yeniuzanti = "upload/pictures/" . $yeniresimadi;
-      $kayit = $db->prepare("insert into tbl_brands SET title=?,picture=?");
+      $kayit = $db->prepare("insert into tbl_marka SET baslik=?,resim=?");
       $kayit->execute(array($navimarka, $yeniuzanti));
     }
     if (isset($_POST['aracmarka'])) 
@@ -32,7 +32,7 @@
       $yeniresimadi  = $yeniad . $uzanti;
       $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi);
       $yeniuzanti = "upload/pictures/" . $yeniresimadi;
-      $kayit = $db->prepare("insert into tbl_cars SET title=?,picture=?");
+      $kayit = $db->prepare("insert into tbl_araba SET baslik=?,resim=?");
       $kayit->execute(array($aracmarka, $yeniuzanti));
     }
     if (isset($_POST['urunad'])) 
@@ -65,9 +65,9 @@
       $ram = $_POST['ram'];
       $detay = $_POST['detay'];
        error_reporting(0);
-      $kayit = $db->prepare("insert into tbl_product SET product_name=?,product_brand=?,product_compatible_car=?,product_stock=?,product_enabled=?");
+      $kayit = $db->prepare("insert into tbl_urun SET urun_adi=?,urun_marka=?,urun_uyumlu_marka=?,urun_stok=?,urun_durum=?");
       $kayit->execute(array($urunad, $cihazmarka, $uyumluaraba, $stokadet, $satisdurum));
-          $kayit1 = $db->prepare("insert into product_features SET product_screen=?,product_os=?,product_storage=?,product_cpu=?,product_ram=?,product_detail=?,product_picture1=?,product_picture2=?,product_picture3=?");     
+          $kayit1 = $db->prepare("insert into urun_ozellikler SET urun_ekran=?,urun_sistem=?,urun_depolama=?,product_cpu=?,product_ram=?,urun_detay=?,urun_resim1=?,urun_resim2=?,urun_resim3=?");     
       $kayit1->execute(array($ekranboyut, $sistem, $depolama, $islemci, $ram, $detay, $yeniuzanti[0], $yeniuzanti[1], $yeniuzanti[2]));
     } 
 if (isset($kayit)) {
