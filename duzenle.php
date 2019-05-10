@@ -40,8 +40,8 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
 </style>
 
 <body>
-    <!-- Navbar-->
-    <nav class="navbar navbar-expand-lg">
+       <!-- Navbar-->
+       <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="anasayfa.php">NaviSIT</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,8 +61,8 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
                     <li class="nav-item">
                         <a id="kayiteklehover" class="nav-link" data-toggle="modal" href="#cihazekle">Cihaz Ekleme</a>
                     </li>
-                    <button type="button" class="btn btn-info rounded-circle mt-2" data-toggle="modal" data-target="#stack1">
-                        <?php echo $_SESSION['kullanici'] ?> <span class="badge badge-default">4</span>
+                    <button style="box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.30), 0px 0px 5px 5px rgba(0,0,0,0.22)" type="button" class="btn btn-info rounded mt-2 ml-3" data-toggle="modal" data-target="#stack1">
+                        <?php echo $_SESSION['kullanici'] ?>
                     </button>
                 </ul>
             </div>
