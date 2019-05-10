@@ -10,15 +10,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <h2 class="modal-title text-dark  mx-auto">Uyumlu Araba Markası Ekleme</h2>
-
                         <div class="col-md-12">
-
-
                             <img class="img-fluid mx-auto d-block rounded mt-3 mb-3" style="box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)" id="resim1" width="225" height="150" />
                             <div class="row ">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
-
                                     <form class="form" enctype="multipart/form-data" method="POST">
                                         <div class="form-group">
                                             <label class="text-dark" for="aracmarka">Araba Markası </label>
@@ -32,22 +28,17 @@
                                 <div class="col-md-6">
                                     <input type="file" class="custom-file-input" name="resim1" onchange="$('#resim1')[0].src = window.URL.createObjectURL(this.files[0])" required>
                                     <label class="custom-file-label">Marka Logosunu Seçin</label>
-
                                 </div>
                             </div>
                             <div class="col-md-3"></div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
-
-                        <input type="submit" name="submit" value="EKLE" class="btn btn-info float-right"></input>
+                        <input type="submit" name="submit" value="EKLE" class="btn btn-info float-right">
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
 </div> 

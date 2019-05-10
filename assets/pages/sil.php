@@ -12,7 +12,7 @@ if(isset($_GET['sil']))
    
    if($sil)
    {
-    echo"   <meta http-equiv='refresh' content='0;URL=home.php'>  ";
+    echo"   <meta http-equiv='refresh' content='0;URL=anasayfa.php'>  ";
    }
 }
 ?>

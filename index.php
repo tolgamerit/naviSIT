@@ -1,10 +1,10 @@
+<?php session_start();?>
 <?php
-//Çerez yönetimi ve sunucu bağlantısı
-session_start();
+
  define("include",true); 
  if(isset($_SESSION['kullanici'] , $_SESSION['parola']))
  { 
-    echo '<script language="javascript">location.href="/naviSIT/home.php";</script>';
+    echo '<script language="javascript">location.href="anasayfa.php";</script>';
  }
 include("assets/config.php"); ?>
 <!doctype html>
@@ -12,11 +12,11 @@ include("assets/config.php"); ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../../../../xampp2/htdocs/naviSIT/assets/css/material-kit.css" rel="stylesheet" />
-    <link href="../../../../xampp2/htdocs/naviSIT/assets/css/arayuz.css" rel="stylesheet" />
+    <link href="assets/css/material-kit.css" rel="stylesheet" />
+    <link href="assets/css/arayuz.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="../../../../xampp2/htdocs/naviSIT/assets/css/all.css">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../../xampp2/htdocs/naviSIT/assets/pictures/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/all.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/pictures/favicon.ico" />
     <title>NaviSIT</title>
 </head>
 <style>
@@ -30,17 +30,19 @@ include("assets/config.php"); ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6 mx-auto">
-                        <img src="../../../../xampp2/htdocs/naviSIT/assets/pictures/logo.png" class="img-fluid" alt="Responsive image">
-
-                        <div class="card rounded">
+                   <div class="col-md-6 mx-auto text-center">
+                    <span  style="
+                    
+                    text-shadow: 10px 8px 6px #272727;font-size: 91px; color: rgb(255, 255, 255);  border-radius: 17%; text-align: center;">NaviSIT</span> 
+                       
+                        <div class="card rounded mt-5">
                             <div class="card-header card-header-info rounded">
                                 <h3 class="mb-0">Panel Giriş</h3>
                             </div>
                             <div class="card-body">
                            <?php 
                            //Giriş işlemleri modülü
-                           include("assets/pages/login.php");
+                           include("assets/pages/giris.php");
                            ?>
                                 <form class="form" role="form" autocomplete="off" id="formLogin" method="POST">
                                     <div class="form-group">
@@ -60,10 +62,10 @@ include("assets/config.php"); ?>
             </div>
         </div>
     </div>
-    <script src="../../../../xampp2/htdocs/naviSIT/assets/js/all.js" type="text/javascript"></script>
-    <script src="../../../../xampp2/htdocs/naviSIT/assets/js/core/jquery.min.js" type="text/javascript"></script>
-    <script src="../../../../xampp2/htdocs/naviSIT/assets/js/core/popper.min.js" type="text/javascript"></script>
-    <script src="../../../../xampp2/htdocs/naviSIT/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-    <script src="../../../../xampp2/htdocs/naviSIT/assets/js/material-kit.js" type="text/javascript"></script>
+    <script src="assets/js/all.js" type="text/javascript"></script>
+    <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="assets/js/material-kit.js" type="text/javascript"></script>
 </body>
 </html>
