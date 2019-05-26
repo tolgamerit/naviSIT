@@ -32,7 +32,7 @@
       $yeniresimadi  = $yeniad . $uzanti;
       $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi);
       $yeniuzanti = "upload/pictures/" . $yeniresimadi;
-      $kayit = $db->prepare("insert into tbl_araba SET baslik=?,resim=?");
+      $kayit = $db->prepare("insert into tbl_araba SET baslik=?,araba=?");
       $kayit->execute(array($aracmarka, $yeniuzanti));
     }
     if (isset($_POST['urunad'])) 
@@ -50,7 +50,7 @@
       $yeniad        = substr(md5(uniqid(rand())), 0, 10);
       $yeniresimadi[$a]  = $yeniad . $uzanti;
       $yukle = move_uploaded_file($kaynak, $hedef . '/' . $yeniresimadi[$a]);
-      $yeniuzanti[$a] = "/upload/pictures/" . $yeniresimadi[$a];
+      $yeniuzanti[$a] = "upload/pictures/" . $yeniresimadi[$a];
       $a++;
      }
       $urunad = $_POST['urunad'];
@@ -64,13 +64,15 @@
       $islemci = $_POST['islemci'];
       $ram = $_POST['ram'];
       $detay = $_POST['detay'];
-       error_reporting(0);
-      $kayit = $db->prepare("insert into tbl_urun SET urun_adi=?,urun_marka=?,urun_uyumlu_marka=?,urun_stok=?,urun_durum=?");
-      $kayit->execute(array($urunad, $cihazmarka, $uyumluaraba, $stokadet, $satisdurum));
-          $kayit1 = $db->prepare("insert into urun_ozellikler SET urun_ekran=?,urun_sistem=?,urun_depolama=?,product_cpu=?,product_ram=?,urun_detay=?,urun_resim1=?,urun_resim2=?,urun_resim3=?");     
-      $kayit1->execute(array($ekranboyut, $sistem, $depolama, $islemci, $ram, $detay, $yeniuzanti[0], $yeniuzanti[1], $yeniuzanti[2]));
+
+      $kayit = $db->prepare("insert into tbl_urun SET urun_adi=?,urun_marka=?,urun_uyumlu_araba=?,urun_stok=?,urun_durum=?");
+      $kayit->execute(array($urunad,$cihazmarka,$uyumluaraba,$stokadet,$satisdurum));
+ 
+       
+          $kayit1 = $db->prepare("insert into urun_ozellikler SET urun_ekran=?,urun_sistem=?,urun_depolama=?,urun_cpu=?,urun_ram=?,urun_detay=?,urun_resim1=?,urun_resim2=?,urun_resim3=?");     
+      $kayit1->execute(array($ekranboyut, $sistem, $depolama, $islemci, $ram, $detay, $yeniuzanti[0], $yeniuzanti[1], $yeniuzanti[2])); 
     } 
-if (isset($kayit)) {
+if (isset($kayit1)) {
   echo "
               <div class='container'>
               <div class='row'> 
@@ -79,7 +81,7 @@ if (isset($kayit)) {
             </div></div>
                </div>
                </div>
-               <meta http-equiv='refresh' content='1;URL=anasayfa.php'>      
+               <meta http-equiv='refresh' content='1;URL=index.php'>
               ";
 } else {
   echo "         
@@ -90,7 +92,7 @@ if (isset($kayit)) {
                </div></div>
                   </div>
                   </div>   
-                  <meta http-equiv='refresh' content='1;URL=anasayfa.php'>            
+                  <meta http-equiv='refresh' content='1;URL=index.php'>
                  ";
             }
           }
