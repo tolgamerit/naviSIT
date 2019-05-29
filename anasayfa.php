@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 define("include", true);
 include("assets/config.php");
