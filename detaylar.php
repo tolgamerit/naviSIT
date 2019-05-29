@@ -9,6 +9,7 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
     echo '<script language="javascript">location.href="index.php";</script>';
 }
 ?>
+
 <!doctype html>
 <html lang="tr">
 <head>
@@ -20,7 +21,7 @@ if (isset($_SESSION['kullanici'], $_SESSION['parola'])) {
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="assets/css/all.css">
     <link rel="shortcut icon" type="image/x-icon" href="assets/pictures/favicon.ico" />
-    <title>NaviSIT</title>
+    <title>NaviSIT </title>
 </head>
 <style>
     body {
